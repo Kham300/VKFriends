@@ -12,6 +12,7 @@ public class FriendsPresenter extends MvpPresenter<VkFriendsView> {
 
     public FriendsPresenter() {
         this.friendsModel = new VKFriendsModel();
+        login();
         getData();
     }
 
@@ -21,5 +22,9 @@ public class FriendsPresenter extends MvpPresenter<VkFriendsView> {
 
     private void loadFriends() {
        getViewState().show((VKList<VKApiUser>) friendsModel.getFriends());
+    }
+
+    private void login(){
+        getViewState().login();
     }
 }

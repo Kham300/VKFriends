@@ -61,8 +61,6 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
 
         adapter = new FriendsAdapter();
         adapter.setCallBack(this);
-        VKSdk.login(this, VKScope.FRIENDS);
-
     }
 
     @Override
@@ -90,6 +88,11 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
     public void show(VKList<VKApiUser> list) {
         adapter.setList(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void login() {
+        VKSdk.login(this, VKScope.FRIENDS);
     }
 
 

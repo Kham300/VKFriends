@@ -2,21 +2,22 @@ package com.example.plzdosmth.vkphotos;
 
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
-import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
+import com.vk.sdk.api.model.VKPhotoArray;
 
 import java.util.List;
 
 class VKFriendsModel {
 
-    private VKList list;
+    private VKList listFriends;
+    private VKList friendPhotos;
 
     public VKFriendsModel() {
-        list = new VKList();
+        listFriends = new VKList();
     }
 
     public List<VKApiUser> getFriends(){
@@ -26,9 +27,23 @@ class VKFriendsModel {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
-                list = (VKList) response.parsedModel;
+                listFriends = (VKList) response.parsedModel;
             }
         });
-        return list;
+        return listFriends;
     }
+
+//    public String getProfilePhotoUrl(int ownerId) {
+//        VKRequest requestPhoto = new VKRequest("photos.get", VKParameters.from(VKApiConst.OWNER_ID,
+//                ownerId, VKApiConst.ALBUM_ID, "profile"), VKRequest.HttpMethod.GET, VKPhotoArray.class);
+//
+//        requestPhoto.executeSyncWithListener(new VKRequest.VKRequestListener() {
+//            @Override
+//            public void onComplete(VKResponse response) {
+//                    super.onComplete(response);
+//                    friendPhotos = (VKList) response.parsedModel;
+//            }
+//        });
+//
+//    }
 }
