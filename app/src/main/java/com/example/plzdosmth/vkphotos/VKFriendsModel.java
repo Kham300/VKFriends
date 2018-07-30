@@ -20,7 +20,7 @@ class VKFriendsModel {
     }
 
     public List<VKApiUser> getFriends(){
-        VKRequest request = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "first_name, last_name, photo_200"));
+        VKRequest request = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "first_name, last_name, photo_200, photo_max_orig"));
         request.executeSyncWithListener(new VKRequest.VKRequestListener() {
 
             @Override

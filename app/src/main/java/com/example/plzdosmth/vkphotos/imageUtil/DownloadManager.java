@@ -3,6 +3,7 @@ package com.example.plzdosmth.vkphotos.imageUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
@@ -37,6 +38,10 @@ public class DownloadManager extends Thread {
         file = new File(context.getCacheDir(), createFileName(url));
     }
 
+    DownloadManager(String url){
+        this.url=url;
+    }
+
 
 
     @Override
@@ -59,11 +64,7 @@ public class DownloadManager extends Thread {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (imageView.getTag().equals(url)) {
                     imageView.setImageBitmap(bitmap);
-                } else {
-                    System.out.println("didn't match");
-                }
             }
         });
     }

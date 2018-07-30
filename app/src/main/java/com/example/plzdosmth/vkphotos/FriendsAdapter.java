@@ -19,6 +19,10 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
 
     private List<VKApiUser> list;
 
+    private CallBack callBack;
+
+
+
     public FriendsAdapter() {
         this.list = new ArrayList<>();
     }
@@ -34,8 +38,11 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
     @Override
     public void onBindViewHolder(@NonNull VH vh, int i) {
         VKApiUser userFull = list.get(i);
-        vh.textView.setText(userFull.first_name);
-        String  s =  userFull.photo_200;
+        String name =  userFull.first_name;
+        String lastname =  userFull.last_name;
+        vh.textViewName.setText(name);
+        vh.textViewSureName.setText(lastname);
+        String  s =  userFull.photo_50;
         vh.imageView.setTag(s);
         ImageDownloader.getInstance().download(vh.imageView, userFull.photo_200);
     }
@@ -47,22 +54,34 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
 
     public class VH extends RecyclerView.ViewHolder{
 
-        private TextView textView;
+        private TextView textViewName;
+        private TextView textViewSureName;
         private ImageView imageView;
 
         public VH(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.name);
+            textViewName = itemView.findViewById(R.id.first_name);
+            textViewSureName = itemView.findViewById(R.id.last_name);
             imageView = itemView.findViewById(R.id.image);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-
                     //https://developer.android.com/training/animation/zoom
+                    String urlBigPhoto = list.get(getAdapterPosition()).photo_max_orig;
+
+                    callBack.zoomImageFromThumb(imageView, urlBigPhoto);
                 }
             });
         }
+    }
+
+    public interface CallBack{
+        void  zoomImageFromThumb(ImageView imageView, String urlBigPhoto);
+    }
+
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
     }
 
     public void setList(VKList<VKApiUser> list) {
