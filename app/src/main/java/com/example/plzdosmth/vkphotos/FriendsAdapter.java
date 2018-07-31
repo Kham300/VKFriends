@@ -14,6 +14,7 @@ import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
@@ -71,16 +72,16 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
                 @Override
                 public void onClick(View view) {
                     int userId = list.get(getAdapterPosition()).id;
-                    String urlBigPhoto = callBack.getOriginPhoto(userId);
-                    callBack.zoomImageFromThumb(imageView, urlBigPhoto);
+                    HashMap<String, String> res = callBack.getOriginPhoto(userId);
+                    callBack.zoomImageFromThumb(imageView, res.get("photo_url"), res.get("about"));
                 }
             });
         }
     }
 
     public interface CallBack{
-        void zoomImageFromThumb(ImageView imageView, String urlBigPhoto);
-        String getOriginPhoto(int id);
+        void zoomImageFromThumb(ImageView imageView, String urlBigPhoto, String about);
+        HashMap<String, String>  getOriginPhoto(int id);
     }
 
     public void setCallBack(CallBack callBack) {

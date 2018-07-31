@@ -10,12 +10,13 @@ import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
 import com.vk.sdk.api.model.VKPhotoArray;
 
+import java.util.HashMap;
 import java.util.List;
 
 class VKFriendsModel {
 
     private VKList listFriends;
-    private String result = null;
+    HashMap<String, String> photoOriginInfo;
     private final String ACCESS_TOKEN = "eb6d3453eb6d3453eb6d34530eeb086e1deeb6deb6d3453b03aaffd39295725c7c87404";
 
     public VKFriendsModel() {
@@ -35,8 +36,8 @@ class VKFriendsModel {
         return listFriends;
     }
 
-    public String getProfilePhotoUrl(final int ownerId) {
-
+    public HashMap<String, String> getProfilePhotoUrl(final int ownerId) {
+        photoOriginInfo = new HashMap<>();
         VKRequest requestPhoto = new VKRequest("photos.get", VKParameters.from(VKApiConst.OWNER_ID,
                 ownerId, VKApiConst.ALBUM_ID, "profile", VKApiConst.REV, 1, VKApiConst.COUNT, 1, VKApiConst.ACCESS_TOKEN, ACCESS_TOKEN, VKApiConst.VERSION, 5.77),
                 VKRequest.HttpMethod.GET, VKPhotoArray.class);
@@ -49,12 +50,15 @@ class VKFriendsModel {
                 VKPhotoArray avatarArray = (VKPhotoArray) response.parsedModel;
 
                 for (VKApiPhoto avatarkaFull : avatarArray) {
-                    result = avatarkaFull.photo_807;
+                    String result = avatarkaFull.photo_807;
+                    String about = avatarkaFull.text;
+                    photoOriginInfo.put("photo_url", result);
+                    photoOriginInfo.put("about", about);
                 }
             }
         });
 
-        return result;
+        return photoOriginInfo;
     }
 
 }

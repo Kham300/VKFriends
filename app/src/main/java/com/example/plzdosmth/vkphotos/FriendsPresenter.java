@@ -5,6 +5,8 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
 
+import java.util.HashMap;
+
 @InjectViewState
 public class FriendsPresenter extends MvpPresenter<VkFriendsView> {
 
@@ -26,7 +28,7 @@ public class FriendsPresenter extends MvpPresenter<VkFriendsView> {
        getViewState().show((VKList<VKApiUser>) friendsModel.getFriends());
     }
 
-    public String getOriginPhoto(int id){
+    public HashMap<String, String> getOriginPhoto(int id){
         return friendsModel.getProfilePhotoUrl(id);
     }
 

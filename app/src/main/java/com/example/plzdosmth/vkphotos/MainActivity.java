@@ -34,6 +34,8 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
 
+import java.util.HashMap;
+
 public class MainActivity extends MvpAppCompatActivity implements VkFriendsView, FriendsAdapter.CallBack
 {
 
@@ -76,6 +78,14 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
         }
     }
 
+    public void showToast(String msg) {
+        if (msg.isEmpty()){
+            msg = "about photo";
+        }
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+    }
+
     @Override
     public void show(VKList<VKApiUser> list) {
         adapter.setList(list);
@@ -88,16 +98,16 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
     }
 
     @Override
-    public void zoomImageFromThumb(final ImageView thumbView, String imageUrl) {
+    public void zoomImageFromThumb(final ImageView thumbView, String imageUrl, String about) {
 
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
 
-
         final ImageView expandedImageView =findViewById(
                 R.id.expanded_image);
         ImageDownloader.getInstance().download(expandedImageView, imageUrl);
+
 
 
 
@@ -165,6 +175,7 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
         set.start();
         mCurrentAnimator = set;
 
+        showToast(about);
 
         final float startScaleFinal = startScale;
         expandedImageView.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +221,7 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
     }
 
     @Override
-    public String getOriginPhoto(int id) {
+    public HashMap<String, String> getOriginPhoto(int id) {
        return friendsPresenter.getOriginPhoto(id);
     }
 }
