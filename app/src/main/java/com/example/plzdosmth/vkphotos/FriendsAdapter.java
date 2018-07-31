@@ -68,7 +68,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
                 public void onClick(View view) {
 
                     //https://developer.android.com/training/animation/zoom
-                    String userId = list.get(getAdapterPosition()).i;
+                    int userId = list.get(getAdapterPosition()).id;
 
                     callBack.zoomImageFromThumb(imageView, urlBigPhoto);
                 }

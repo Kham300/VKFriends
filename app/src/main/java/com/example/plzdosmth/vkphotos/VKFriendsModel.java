@@ -24,7 +24,7 @@ class VKFriendsModel {
     }
 
     public List<VKApiUser> getFriends(){
-        VKRequest request = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "first_name, last_name, photo_200, user_id"));
+        VKRequest request = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "first_name, last_name, photo_200"));
         request.executeSyncWithListener(new VKRequest.VKRequestListener() {
 
             @Override
@@ -38,10 +38,10 @@ class VKFriendsModel {
 
 
 //https://github.com/VKCOM/vk-android-sdk/issues/126
-    public String getProfilePhotoUrl(String ownerId) {
-
+    public String getProfilePhotoUrl(int ownerId) {
         VKRequest requestPhoto = new VKRequest("photos.get", VKParameters.from(VKApiConst.OWNER_ID,
-                ownerId, VKApiConst.ALBUM_ID, "profile", VKApiConst.REV, "rev=1", VKApiConst.COUNT, "count=1"), VKRequest.HttpMethod.GET, VKPhotoArray.class);
+                ownerId, VKApiConst.ALBUM_ID, "profile", "rev=1", "count=1"),
+                VKRequest.HttpMethod.GET, VKPhotoArray.class);
 
         requestPhoto.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
