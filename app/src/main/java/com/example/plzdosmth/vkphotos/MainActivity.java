@@ -84,11 +84,8 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
 
     @Override
     public void login() {
-        if (!VKSdk.isLoggedIn()){
-            VKSdk.login(this, VKScope.FRIENDS);
-        }
+        VKSdk.login(this, VKScope.FRIENDS);
     }
-
 
     @Override
     public void zoomImageFromThumb(final ImageView thumbView, String imageUrl) {
