@@ -40,15 +40,8 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
     @InjectPresenter
     public FriendsPresenter friendsPresenter;
 
-    // Hold a reference to the current animator,
-    // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
-
-    // The system "short" animation time duration, in milliseconds. This
-    // duration is ideal for subtle animations or animations that occur
-    // very frequently.
     private int mShortAnimationDuration;
-
     private RecyclerView recyclerView;
     private FriendsAdapter adapter;
     private Handler handler;
@@ -58,7 +51,6 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         handler = new Handler();
-
         adapter = new FriendsAdapter();
         adapter.setCallBack(this);
     }
@@ -92,7 +84,9 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
 
     @Override
     public void login() {
-        VKSdk.login(this, VKScope.FRIENDS);
+        if (!VKSdk.isLoggedIn()){
+            VKSdk.login(this, VKScope.FRIENDS);
+        }
     }
 
 
@@ -237,5 +231,10 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
                 mCurrentAnimator = set;
             }
         });
+    }
+
+    @Override
+    public String getOriginPhoto(int id) {
+       return friendsPresenter.getOriginPhoto(id);
     }
 }

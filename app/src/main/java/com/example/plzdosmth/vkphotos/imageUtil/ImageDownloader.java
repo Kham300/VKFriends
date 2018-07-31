@@ -26,9 +26,4 @@ public class ImageDownloader {
         threadPoolExecutor.execute(new DownloadManager(imageView, url));
     }
 
-    public void download(String url) {
-     DownloadManager downloadManager =  new DownloadManager(url);
-    }
-
-
 }

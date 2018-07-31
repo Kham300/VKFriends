@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.plzdosmth.vkphotos.imageUtil.DownloadManager;
 import com.example.plzdosmth.vkphotos.imageUtil.ImageDownloader;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
@@ -21,10 +22,13 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
 
     private CallBack callBack;
 
+    private ImageDownloader downloader;
+
 
 
     public FriendsAdapter() {
         this.list = new ArrayList<>();
+        downloader = ImageDownloader.getInstance();
     }
 
     @NonNull
@@ -39,12 +43,12 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
     public void onBindViewHolder(@NonNull VH vh, int i) {
         VKApiUser userFull = list.get(i);
         String name =  userFull.first_name;
-        String lastname =  userFull.last_name;
+        String lastName =  userFull.last_name;
         vh.textViewName.setText(name);
-        vh.textViewSureName.setText(lastname);
+        vh.textViewSureName.setText(lastName);
         String  s =  userFull.photo_50;
         vh.imageView.setTag(s);
-        ImageDownloader.getInstance().download(vh.imageView, userFull.photo_200);
+        downloader.download(vh.imageView, userFull.photo_200);
     }
 
     @Override
@@ -66,10 +70,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    //https://developer.android.com/training/animation/zoom
-                    String userId = list.get(getAdapterPosition()).i;
-
+                    int userId = list.get(getAdapterPosition()).id;
+                    String urlBigPhoto = callBack.getOriginPhoto(userId);
                     callBack.zoomImageFromThumb(imageView, urlBigPhoto);
                 }
             });
@@ -77,7 +79,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.VH>{
     }
 
     public interface CallBack{
-        void  zoomImageFromThumb(ImageView imageView, String urlBigPhoto);
+        void zoomImageFromThumb(ImageView imageView, String urlBigPhoto);
+        String getOriginPhoto(int id);
     }
 
     public void setCallBack(CallBack callBack) {

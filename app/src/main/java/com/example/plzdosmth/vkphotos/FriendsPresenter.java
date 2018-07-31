@@ -16,12 +16,18 @@ public class FriendsPresenter extends MvpPresenter<VkFriendsView> {
         getData();
     }
 
+
+
     public void getData(){
         loadFriends();
     }
 
     private void loadFriends() {
        getViewState().show((VKList<VKApiUser>) friendsModel.getFriends());
+    }
+
+    public String getOriginPhoto(int id){
+        return friendsModel.getProfilePhotoUrl(id);
     }
 
     private void login(){

@@ -8,6 +8,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.model.VKApiPhoto;
+import com.vk.sdk.api.model.VKPhotoArray;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,7 +36,6 @@ public class DownloadManager extends Thread {
     private Context context;
     private Bitmap bitmap;
 
-
     DownloadManager(ImageView imageView, String url) {
         handler = new Handler();
         this.imageView = imageView;
@@ -37,12 +43,6 @@ public class DownloadManager extends Thread {
         context = imageView.getContext();
         file = new File(context.getCacheDir(), createFileName(url));
     }
-
-    DownloadManager(String url){
-        this.url=url;
-    }
-
-
 
     @Override
     public void run() {
@@ -119,6 +119,7 @@ public class DownloadManager extends Thread {
             connection.disconnect();
         }
     }
+
 
     public String createFileName(String url){
 //        String result = url.substring(6, url.length() - 11);

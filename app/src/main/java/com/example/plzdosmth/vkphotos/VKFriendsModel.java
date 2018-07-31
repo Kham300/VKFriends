@@ -1,7 +1,5 @@
 package com.example.plzdosmth.vkphotos;
 
-import android.widget.ImageView;
-
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKParameters;
@@ -17,7 +15,8 @@ import java.util.List;
 class VKFriendsModel {
 
     private VKList listFriends;
-    private String friendPhoto;
+    private String result = null;
+    private final String ACCESS_TOKEN = "eb6d3453eb6d3453eb6d34530eeb086e1deeb6deb6d3453b03aaffd39295725c7c87404";
 
     public VKFriendsModel() {
         listFriends = new VKList();
@@ -36,26 +35,26 @@ class VKFriendsModel {
         return listFriends;
     }
 
-
-//https://github.com/VKCOM/vk-android-sdk/issues/126
-    public String getProfilePhotoUrl(String ownerId) {
+    public String getProfilePhotoUrl(final int ownerId) {
 
         VKRequest requestPhoto = new VKRequest("photos.get", VKParameters.from(VKApiConst.OWNER_ID,
-                ownerId, VKApiConst.ALBUM_ID, "profile", VKApiConst.REV, "rev=1", VKApiConst.COUNT, "count=1"), VKRequest.HttpMethod.GET, VKPhotoArray.class);
+                ownerId, VKApiConst.ALBUM_ID, "profile", VKApiConst.REV, 1, VKApiConst.COUNT, 1, VKApiConst.ACCESS_TOKEN, ACCESS_TOKEN, VKApiConst.VERSION, 5.77),
+                VKRequest.HttpMethod.GET, VKPhotoArray.class);
 
-        requestPhoto.executeWithListener(new VKRequest.VKRequestListener() {
+        requestPhoto.executeSyncWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
 
-                VKPhotoArray avataraArray = (VKPhotoArray) response.parsedModel;
+                VKPhotoArray avatarArray = (VKPhotoArray) response.parsedModel;
 
-                for (VKApiPhoto avatarkaFull : avataraArray) {
-                    friendPhoto =  avatarkaFull.photo_807;
+                for (VKApiPhoto avatarkaFull : avatarArray) {
+                    result = avatarkaFull.photo_807;
                 }
             }
         });
 
-        return friendPhoto;
+        return result;
     }
+
 }
