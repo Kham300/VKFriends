@@ -122,7 +122,6 @@ public class DownloadManager extends Thread {
 
 
     public String createFileName(String url){
-//        String result = url.substring(6, url.length() - 11);
         String result = url;
         result = result.replace("/", "");
         result = result.replace(".", "");
