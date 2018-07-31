@@ -16,6 +16,7 @@ public class FriendsPresenter extends MvpPresenter<VkFriendsView> {
         this.friendsModel = new VKFriendsModel();
         login();
         getData();
+
     }
 
 

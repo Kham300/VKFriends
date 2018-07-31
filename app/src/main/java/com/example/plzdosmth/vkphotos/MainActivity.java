@@ -83,7 +83,6 @@ public class MainActivity extends MvpAppCompatActivity implements VkFriendsView,
             msg = "about photo";
         }
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
